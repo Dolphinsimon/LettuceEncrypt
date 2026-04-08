@@ -1,5 +1,8 @@
 name: CI
 
+permissions:
+  contents: read
+
 on:
   push:
     branches-ignore:
@@ -60,6 +63,9 @@ jobs:
     if: ${{ github.event_name == 'release' || (github.event.inputs.release == 'true' && github.event_name == 'workflow_dispatch') }}
     needs: build
     runs-on: windows-latest
+    permissions:
+      contents: write
+      packages: write
     env:
       PACKAGE_VERSION: ${{ needs.build.outputs.package_version }}
     steps:
