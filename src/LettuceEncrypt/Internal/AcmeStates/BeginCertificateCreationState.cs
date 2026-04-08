@@ -35,7 +35,7 @@ internal class BeginCertificateCreationState : AcmeState
         try
         {
             var account = await _acmeCertificateFactory.GetOrCreateAccountAsync(cancellationToken);
-            _logger.LogInformation("Using account {accountId}", account.Id);
+            _logger.LogInformation("Using ACME account.");
 
             _logger.LogInformation("Creating certificate for {hostname}",
                 string.Join(",", domainNames));
