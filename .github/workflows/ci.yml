@@ -1,5 +1,8 @@
 name: CI
 
+permissions:
+  contents: read
+
 on:
   push:
     branches-ignore:
@@ -64,7 +67,7 @@ jobs:
     needs: build
     runs-on: windows-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     env:
       PACKAGE_VERSION: ${{ needs.build.outputs.package_version }}
