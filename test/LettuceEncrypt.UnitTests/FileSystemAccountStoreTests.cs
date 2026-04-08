@@ -14,7 +14,7 @@ using Xunit;
 
 namespace LettuceEncrypt.UnitTests;
 
-public class FileSystemAccountStoreTests : IDisposable
+public sealed class FileSystemAccountStoreTests : IDisposable
 {
     private readonly DirectoryInfo _testDir =
         new(Path.Combine(AppContext.BaseDirectory, Path.GetRandomFileName()));
@@ -37,7 +37,7 @@ public class FileSystemAccountStoreTests : IDisposable
     {
         var store = CreateStore();
 
-        Assert.Null(await store.GetAccountAsync(default));
+        Assert.Null(await store.GetAccountAsync(TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -54,14 +54,14 @@ public class FileSystemAccountStoreTests : IDisposable
             PrivateKey = bytes,
         };
 
-        await store.SaveAccountAsync(account, default);
+        await store.SaveAccountAsync(account, TestContext.Current.CancellationToken);
 
         var jsonFile =
             new FileInfo(
                 Path.Combine(_testDir.FullName, "accounts/acme-staging-v02.api.letsencrypt.org/directory/1.json"));
         Assert.True(jsonFile.Exists);
         using var readStream = jsonFile.OpenRead();
-        var doc = await JsonDocument.ParseAsync(readStream);
+        var doc = await JsonDocument.ParseAsync(readStream, cancellationToken: TestContext.Current.CancellationToken);
         Assert.Equal(JsonValueKind.Object, doc.RootElement.ValueKind);
     }
 
@@ -81,10 +81,10 @@ public class FileSystemAccountStoreTests : IDisposable
         var path = Path.GetDirectoryName(jsonFile);
         Assert.NotNull(path);
         Directory.CreateDirectory(path!);
-        await File.WriteAllTextAsync(jsonFile, TestJson);
+        await File.WriteAllTextAsync(jsonFile, TestJson, TestContext.Current.CancellationToken);
 
         var store = CreateStore();
-        var account = await store.GetAccountAsync(default);
+        var account = await store.GetAccountAsync(TestContext.Current.CancellationToken);
 
         Assert.NotNull(account);
         Assert.Equal(1, account!.Id);

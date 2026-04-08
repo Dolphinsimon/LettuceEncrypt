@@ -21,7 +21,7 @@ public class DeveloperCertLoaderTests
 
         var loader = new DeveloperCertLoader(env.Object, NullLogger<DeveloperCertLoader>.Instance);
 
-        var certs = await loader.GetCertificatesAsync(default);
+        var certs = await loader.GetCertificatesAsync(TestContext.Current.CancellationToken);
         Assert.NotEmpty(certs);
         Assert.All(certs, c => { Assert.Equal("localhost", c.GetNameInfo(X509NameType.SimpleName, false)); });
     }
@@ -34,7 +34,7 @@ public class DeveloperCertLoaderTests
 
         var loader = new DeveloperCertLoader(env.Object, NullLogger<DeveloperCertLoader>.Instance);
 
-        var certs = await loader.GetCertificatesAsync(default);
+        var certs = await loader.GetCertificatesAsync(TestContext.Current.CancellationToken);
         Assert.Empty(certs);
     }
 }

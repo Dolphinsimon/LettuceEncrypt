@@ -1,19 +1,17 @@
-﻿// Copyright (c) Nate McMaster.
+// Copyright (c) Nate McMaster.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Security.Cryptography.X509Certificates;
 using LettuceEncrypt.Internal;
-using McMaster.Extensions.Xunit;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace LettuceEncrypt.UnitTests;
 
 using static TestUtils;
 
-public class X509CertStoreTests : IDisposable
+public sealed class X509CertStoreTests : IDisposable
 {
     private readonly ITestOutputHelper _output;
     private readonly LettuceEncryptOptions _options;
@@ -34,9 +32,7 @@ public class X509CertStoreTests : IDisposable
         _certStore.Dispose();
     }
 
-    [SkippableFact]
-    [SkipOnWindowsCIBuild(SkipReason =
-        "On Windows in CI, adding certs to store doesn't work for unclear reasons.")]
+    [Fact(Skip = "On Windows in CI, adding certs to store doesn't work for unclear reasons.")]
     public async Task ItFindsCertByCommonNameAsync()
     {
         var commonName = "x509store.read.test.natemcmaster.com";
@@ -50,7 +46,7 @@ public class X509CertStoreTests : IDisposable
 
         try
         {
-            var certs = await _certStore.GetCertificatesAsync(default);
+            var certs = await _certStore.GetCertificatesAsync(TestContext.Current.CancellationToken);
             var foundCert = Assert.Single(certs);
             Assert.NotNull(foundCert);
             Assert.Equal(testCert, foundCert);
@@ -61,9 +57,7 @@ public class X509CertStoreTests : IDisposable
         }
     }
 
-    [SkippableFact]
-    [SkipOnWindowsCIBuild(SkipReason =
-        "On Windows in CI, adding certs to store doesn't work for unclear reasons.")]
+    [Fact(Skip = "On Windows in CI, adding certs to store doesn't work for unclear reasons.")]
     public async Task ItSavesCertificates()
     {
         var commonName = "x509store.save.test.natemcmaster.com";
@@ -73,7 +67,7 @@ public class X509CertStoreTests : IDisposable
 
         try
         {
-            await _certStore.SaveAsync(testCert, default);
+            await _certStore.SaveAsync(testCert, TestContext.Current.CancellationToken);
 
             var certificates = x509store.Certificates.Find(
                 X509FindType.FindByThumbprint,
@@ -98,7 +92,7 @@ public class X509CertStoreTests : IDisposable
     {
         var commonName = "notfound.test.natemcmaster.com";
         _options.DomainNames = new[] { commonName };
-        var certs = await _certStore.GetCertificatesAsync(default);
+        var certs = await _certStore.GetCertificatesAsync(TestContext.Current.CancellationToken);
         Assert.Empty(certs);
     }
 }

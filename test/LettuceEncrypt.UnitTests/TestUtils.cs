@@ -1,4 +1,4 @@
-﻿// Copyright (c) Nate McMaster.
+// Copyright (c) Nate McMaster.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Security.Cryptography;
@@ -42,7 +42,7 @@ public class TestUtils
             {
                 // https://github.com/dotnet/runtime/issues/29144
                 var certWithKey = cert.Export(X509ContentType.Pfx);
-                return new X509Certificate2(certWithKey, "", X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
+                return X509CertificateLoader.LoadPkcs12(certWithKey, "", X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
             }
             catch
             {

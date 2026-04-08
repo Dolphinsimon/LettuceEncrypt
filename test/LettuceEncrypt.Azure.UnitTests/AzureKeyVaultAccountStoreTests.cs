@@ -45,7 +45,7 @@ public class AzureKeyVaultAccountStoreTests
             PrivateKey = KeyFactory.NewKey(Certes.KeyAlgorithm.ES512).ToDer(),
         };
 
-        await store.SaveAccountAsync(accountModel, default);
+        await store.SaveAccountAsync(accountModel, TestContext.Current.CancellationToken);
 
         secretClient.Verify(c => c.SetSecretAsync(
             "le-account-acme-v02-api-letsencrypt-org",
@@ -70,7 +70,7 @@ public class AzureKeyVaultAccountStoreTests
                     default))
             .Throws(new RequestFailedException(404, "Not found"));
 
-        var account = await store.GetAccountAsync(default);
+        var account = await store.GetAccountAsync(TestContext.Current.CancellationToken);
 
         Assert.Null(account);
     }
@@ -94,7 +94,7 @@ public class AzureKeyVaultAccountStoreTests
                     default))
             .Returns(Task.FromResult(returnSecret));
 
-        var account = await store.GetAccountAsync(default);
+        var account = await store.GetAccountAsync(TestContext.Current.CancellationToken);
 
         Assert.NotNull(account);
         Assert.Equal(1234, account.Id);

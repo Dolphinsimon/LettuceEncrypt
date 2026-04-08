@@ -39,8 +39,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            6.0.x
-            7.0.x
+            10.x
       - name: Run build script
         id: build_script
         run: ./build.ps1 -ci
@@ -92,11 +91,11 @@ jobs:
             Packages have been posted to these feeds:
 
             #### NuGet.org
-            https://nuget.org/packages/LettuceEncrypt/${{ env.PACKAGE_VERSION }}
-            https://nuget.org/packages/LettuceEncrypt.Azure/${{ env.PACKAGE_VERSION }}
+            https://nuget.org/packages/LettuceEncrypt.Community/${{ env.PACKAGE_VERSION }}
+            https://nuget.org/packages/LettuceEncrypt.Community.Azure/${{ env.PACKAGE_VERSION }}
 
             #### GitHub Package Registry
-            https://github.com/natemcmaster?tab=packages&repo_name=LettuceEncrypt
+            https://github.com/Dolphinsimon?tab=packages&repo_name=LettuceEncrypt.Community
 
           draft: true
           prerelease: ${{ env.IS_STABLE_BUILD == 'false' }} # Example: v3.1.0-beta

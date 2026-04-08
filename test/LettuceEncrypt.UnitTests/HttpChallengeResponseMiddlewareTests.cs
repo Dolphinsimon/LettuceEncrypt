@@ -1,4 +1,4 @@
-﻿// Copyright (c) Nate McMaster.
+// Copyright (c) Nate McMaster.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using LettuceEncrypt.Internal;
@@ -50,7 +50,7 @@ public class HttpChallengeResponseMiddlewareTests
 
         context.Response.Body.Seek(0, SeekOrigin.Begin);
         var reader = new StreamReader(context.Response.Body);
-        var streamText = await reader.ReadToEndAsync();
+        var streamText = await reader.ReadToEndAsync(TestContext.Current.CancellationToken);
 
         Assert.Equal(TokenValue, streamText);
         Assert.Equal("application/octet-stream", context.Response.ContentType);

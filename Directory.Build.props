@@ -6,8 +6,8 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/natemcmaster/LettuceEncrypt</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/natemcmaster/LettuceEncrypt</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Dolphinsimon/LettuceEncrypt</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Dolphinsimon/LettuceEncrypt</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <DebugType>portable</DebugType>
@@ -15,7 +15,7 @@
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <IncludeSymbols>true</IncludeSymbols>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>default</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)src\StrongName.snk</AssemblyOriginatorKeyFile>
@@ -31,6 +31,7 @@
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory).build\$(MSBuildProjectName)\obj\</BaseIntermediateOutputPath>
     <!-- Hide results files in Solution Explorer -->
     <DefaultItemExcludes>$(DefaultItemExcludes);TestResults\**</DefaultItemExcludes>
+    <PackageId Condition="'$(PackageId)' == ''">$(MSBuildProjectName)</PackageId>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -44,13 +45,13 @@
     <PackageVersion Condition="'$(IncludePreReleaseLabelInPackageVersion)' == 'true'">$(PackageVersion)-$(VersionSuffix)</PackageVersion>
 
     <PackageReleaseNotes>
-      See release notes at https://github.com/natemcmaster/LettuceEncrypt/releases/tag/v$(PackageVersion).
+      See release notes at https://github.com/Dolphinsimon/LettuceEncrypt/releases/tag/v$(PackageVersion).
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/wiki/natemcmaster/LettuceEncrypt/logo.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/wiki/Dolphinsimon/LettuceEncrypt/logo.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(IsPackable)' == 'true' ">

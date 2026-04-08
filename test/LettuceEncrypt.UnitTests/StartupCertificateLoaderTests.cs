@@ -33,7 +33,7 @@ public class StartupCertificateLoaderTests
             new[] { source1.Object, source2.Object },
             selector.Object);
 
-        await startupLoader.StartAsync(default);
+        await startupLoader.StartAsync(TestContext.Current.CancellationToken);
 
         selector.VerifyAll();
         source1.VerifyAll();

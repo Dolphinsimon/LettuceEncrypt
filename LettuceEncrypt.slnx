@@ -1,0 +1,30 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/files/">
+    <File Path=".config/dotnet-tools.json" />
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="build.ps1" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/KeyVault/KeyVault.csproj" />
+    <Project Path="samples/Web/Web.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Kestrel.Certificates/McMaster.AspNetCore.Kestrel.Certificates.csproj" />
+    <Project Path="src/LettuceEncrypt.Azure/LettuceEncrypt.Azure.csproj" />
+    <Project Path="src/LettuceEncrypt/LettuceEncrypt.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/LettuceEncrypt.Azure.UnitTests/LettuceEncrypt.Azure.UnitTests.csproj" />
+    <Project Path="test/LettuceEncrypt.UnitTests/LettuceEncrypt.UnitTests.csproj" />
+  </Folder>
+</Solution>

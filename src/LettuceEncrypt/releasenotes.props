@@ -4,7 +4,7 @@
 New features:
 
   * Add support for wildcard domains by using DNS challenges to validate domain ownership
-    * See https://github.com/natemcmaster/LettuceEncrypt#when-using-dns-01 for details.
+    * See https://github.com/Dolphinsimon/LettuceEncrypt#when-using-dns-01 for details.
 
   * Add option (#279) and API (#281) to configure additional valid issuers
     * This is done by configuring certificates as strings. These are passed to certes internally when verifying the issuer. 
@@ -52,7 +52,7 @@ Fixes in patch 1.1.2:
     <PackageReleaseNotes Condition="'$(VersionPrefix)' == '1.0.0'">
 First release! This is basically the same as McMaster.AspNetCore.LetsEncrypt 0.5.0, but has been renamed.
 
-See https://github.com/natemcmaster/LettuceEncrypt/#Usage for instructions.
+See https://github.com/Dolphinsimon/LettuceEncrypt/#Usage for instructions.
 
 Changes since 0.5.0:
 * Renamed namespaces, classes, and methods to 'LettuceEncrypt'

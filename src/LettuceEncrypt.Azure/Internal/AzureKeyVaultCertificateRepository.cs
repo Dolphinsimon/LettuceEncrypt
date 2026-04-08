@@ -1,4 +1,4 @@
-﻿// Copyright (c) Nate McMaster.
+// Copyright (c) Nate McMaster.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Security.Cryptography.X509Certificates;
@@ -24,7 +24,7 @@ internal class AzureKeyVaultCertificateRepository : ICertificateRepository, ICer
         ILogger<AzureKeyVaultCertificateRepository> logger)
     {
         _certificateClientFactory = certificateClientFactory ??
-                                    throw new ArgumentNullException(nameof(_certificateClientFactory));
+                                    throw new ArgumentNullException(nameof(certificateClientFactory));
         _secretClientFactory = secretClientFactory ?? throw new ArgumentNullException(nameof(secretClientFactory));
         _encryptOptions = encryptOptions ?? throw new ArgumentNullException(nameof(encryptOptions));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -58,7 +58,7 @@ internal class AzureKeyVaultCertificateRepository : ICertificateRepository, ICer
 
             var certificate = await certificateClient.GetCertificateAsync(normalizedName, token);
 
-            return new X509Certificate2(certificate.Value.Cer);
+            return X509CertificateLoader.LoadCertificate(certificate.Value.Cer);
         }
         catch (RequestFailedException ex) when (ex.Status == 404)
         {
@@ -89,7 +89,7 @@ internal class AzureKeyVaultCertificateRepository : ICertificateRepository, ICer
 
             var certificate = await secretClient.GetSecretAsync(normalizedName, null, token);
 
-            var cert = new X509Certificate2(Convert.FromBase64String(certificate.Value.Value));
+            var cert = X509CertificateLoader.LoadPkcs12(Convert.FromBase64String(certificate.Value.Value), password: null);
 
             _logger.LogInformation(
                 "Found certificate for {domainName} from Azure Key Vault with thumbprint {thumbprint}",

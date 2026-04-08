@@ -1,4 +1,4 @@
-﻿// Copyright (c) Nate McMaster.
+// Copyright (c) Nate McMaster.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 #nullable enable
@@ -24,9 +24,9 @@ public class FileSystemCertificateRepoTests
         var repo = new FileSystemCertificateRepository(dir, password);
         var cert = CreateTestCert("localhost");
         var expectedFile = Path.Combine(dir.FullName, "certs", cert.Thumbprint + ".pfx");
-        await repo.SaveAsync(cert, default);
+        await repo.SaveAsync(cert, TestContext.Current.CancellationToken);
 
-        Assert.NotNull(new X509Certificate2(expectedFile));
+        Assert.NotNull(X509CertificateLoader.LoadCertificateFromFile(expectedFile));
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class FileSystemCertificateRepoTests
         var cert = CreateTestCert("localhost");
         var expectedFile = Path.Combine(dir.FullName, "certs", cert.Thumbprint + ".pfx");
 
-        await repo.SaveAsync(cert, default);
+        await repo.SaveAsync(cert, TestContext.Current.CancellationToken);
 
         dir.Refresh();
         Assert.True(dir.Exists, "Directory was created");
@@ -56,9 +56,9 @@ public class FileSystemCertificateRepoTests
         var repo = new FileSystemCertificateRepository(dir, password);
         var writeCert = CreateTestCert("localhost");
 
-        await repo.SaveAsync(writeCert, default);
+        await repo.SaveAsync(writeCert, TestContext.Current.CancellationToken);
 
-        var certs = await repo.GetCertificatesAsync(default);
+        var certs = await repo.GetCertificatesAsync(TestContext.Current.CancellationToken);
         var readCert = Assert.Single(certs);
         Assert.NotSame(writeCert, readCert);
         Assert.Equal(writeCert, readCert);
