@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
-    <IsPackable>true</IsPackable>
+    <IsPackable>false</IsPackable>
     <Description>A class library for managing HTTPS certificates with ASP.NET Core.
 
 This library includes API for dynamically selecting which HTTPS certificate to use in Kestrel.</Description>
