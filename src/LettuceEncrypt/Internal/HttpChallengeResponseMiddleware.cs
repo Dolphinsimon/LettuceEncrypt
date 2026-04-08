@@ -34,7 +34,8 @@ internal class HttpChallengeResponseMiddleware : IMiddleware
             return;
         }
 
-        _logger.LogDebug("Confirmed challenge request for {token}", token);
+        var safeTokenForLog = token.Replace("\r", string.Empty).Replace("\n", string.Empty);
+        _logger.LogDebug("Confirmed challenge request for {token}", safeTokenForLog);
 
         context.Response.ContentLength = value?.Length ?? 0;
         context.Response.ContentType = "application/octet-stream";
