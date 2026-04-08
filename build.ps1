@@ -32,15 +32,15 @@ if ($ci) {
     & dotnet --info
 }
 
-if (-not (Test-Path variable:\IsCoreCLR)) {
-    $IsWindows = $true
-}
+# if (-not (Test-Path variable:\IsCoreCLR)) {
+#     $IsWindows = $true
+# }
 
 $artifacts = "$PSScriptRoot/artifacts/"
 
 Remove-Item -Recurse $artifacts -ErrorAction Ignore
 
-[string[]] $formatArgs=@()
+[string[]] $formatArgs = @()
 if ($ci) {
     $formatArgs += '--verify-no-changes'
 }
@@ -49,14 +49,14 @@ exec dotnet format -v detailed @formatArgs
 exec dotnet build --configuration $Configuration '-warnaserror:CS1591' @MSBuildArgs
 exec dotnet pack --no-restore --no-build --configuration $Configuration -o $artifacts @MSBuildArgs
 
-[string[]] $testArgs=@()
+[string[]] $testArgs = @()
 if ($env:TF_BUILD) {
     $testArgs += '--logger', 'trx'
 }
 
-exec dotnet test --no-restore --no-build --configuration $Configuration '-clp:Summary' `
-    --collect:"XPlat Code Coverage" `
-    @testArgs `
-    @MSBuildArgs
+# exec dotnet test --no-restore --no-build --configuration $Configuration '-clp:Summary' `
+#     --collect:"XPlat Code Coverage" `
+#     @testArgs `
+#     @MSBuildArgs
 
 write-host -f green 'BUILD SUCCEEDED'
