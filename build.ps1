@@ -54,9 +54,9 @@ if ($env:TF_BUILD) {
     $testArgs += '--logger', 'trx'
 }
 
-# exec dotnet test --no-restore --no-build --configuration $Configuration '-clp:Summary' `
-#     --collect:"XPlat Code Coverage" `
-#     @testArgs `
-#     @MSBuildArgs
+exec dotnet test --no-restore --no-build --configuration $Configuration '-clp:Summary' `
+    --collect:"XPlat Code Coverage" `
+    @testArgs `
+    @MSBuildArgs
 
 write-host -f green 'BUILD SUCCEEDED'

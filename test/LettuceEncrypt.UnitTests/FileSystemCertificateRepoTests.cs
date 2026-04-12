@@ -26,7 +26,7 @@ public class FileSystemCertificateRepoTests
         var expectedFile = Path.Combine(dir.FullName, "certs", cert.Thumbprint + ".pfx");
         await repo.SaveAsync(cert, TestContext.Current.CancellationToken);
 
-        Assert.NotNull(X509CertificateLoader.LoadCertificateFromFile(expectedFile));
+        Assert.NotNull(X509CertificateLoader.LoadPkcs12FromFile(expectedFile, password));
     }
 
     [Fact]
