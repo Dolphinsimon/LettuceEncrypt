@@ -1,6 +1,7 @@
 // Copyright (c) Nate McMaster.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Threading;
 using Azure;
 using Azure.Security.KeyVault.Secrets;
 using Certes;
@@ -50,7 +51,7 @@ public class AzureKeyVaultAccountStoreTests
         secretClient.Verify(c => c.SetSecretAsync(
             "le-account-acme-v02-api-letsencrypt-org",
             It.IsAny<string>(),
-            default));
+            It.IsAny<CancellationToken>()));
     }
 
     [Fact]
@@ -67,7 +68,7 @@ public class AzureKeyVaultAccountStoreTests
         secretClient.Setup(c =>
                 c.GetSecretAsync(It.IsAny<string>(),
                     null,
-                    default))
+                    It.IsAny<CancellationToken>()))
             .Throws(new RequestFailedException(404, "Not found"));
 
         var account = await store.GetAccountAsync(TestContext.Current.CancellationToken);
@@ -91,7 +92,7 @@ public class AzureKeyVaultAccountStoreTests
         secretClient.Setup(c =>
                 c.GetSecretAsync(name,
                     null,
-                    default))
+                    It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(returnSecret));
 
         var account = await store.GetAccountAsync(TestContext.Current.CancellationToken);

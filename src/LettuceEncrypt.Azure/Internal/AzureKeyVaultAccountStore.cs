@@ -63,7 +63,7 @@ internal class AzureKeyVaultAccountStore : IAccountStore
 
             _logger.LogInformation("Found account key in {secretName}, version {version}",
                 secret.Value.Name,
-                secret.Value.Properties.Version);
+                secret.Value.Properties?.Version);
 
             return JsonSerializer.Deserialize<AccountModel>(secret.Value.Value);
         }

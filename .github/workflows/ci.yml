@@ -54,11 +54,11 @@ jobs:
           name: packages
           path: artifacts/
           if-no-files-found: error
-      # - uses: codecov/codecov-action@v4
-      #   with:
-      #     name: unittests-${{ matrix.os }}
-      #     fail_ci_if_error: true
-      #     token: ${{ secrets.CODECOV_TOKEN }}
+      - uses: codecov/codecov-action@v6
+        with:
+          name: unittests-${{ matrix.os }}
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
   release:
     if: ${{ github.event_name == 'release' || (github.event.inputs.release == 'true' && github.event_name == 'workflow_dispatch') }}
     needs: build
@@ -100,7 +100,7 @@ jobs:
 
       #       #### NuGet.org
       #       https://nuget.org/packages/LettuceEncrypt.Community/${{ env.PACKAGE_VERSION }}
-      #       https://nuget.org/packages/LettuceEncrypt.Community.Azure/${{ env.PACKAGE_VERSION }}
+      #       https://nuget.org/packages/LettuceEncrypt.Azure.Community/${{ env.PACKAGE_VERSION }}
 
       #       #### GitHub Package Registry
       #       https://github.com/Dolphinsimon?tab=packages&repo_name=LettuceEncrypt.Community
