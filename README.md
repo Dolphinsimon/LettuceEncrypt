@@ -8,8 +8,8 @@ LettuceEncrypt for ASP.NET Core
 
 [ci]: https://github.com/Dolphinsimon/LettuceEncrypt/actions?query=workflow%3ACI+branch%3Amain
 [ci-badge]: https://github.com/Dolphinsimon/LettuceEncrypt/workflows/CI/badge.svg
-[codecov]: https://codecov.io/gh/Dolphinsimon/LettuceEncrypt
-[codecov-badge]: https://codecov.io/gh/Dolphinsimon/LettuceEncrypt/branch/main/graph/badge.svg?token=l6uSsHZ8nA
+[codecov]: https://codecov.io/github/Dolphinsimon/LettuceEncrypt
+[codecov-badge]: <https://codecov.io/github/Dolphinsimon/LettuceEncrypt/branch/main/graph/badge.svg?token=KTPNB1W1WC>
 [nuget]: https://www.nuget.org/packages/LettuceEncrypt/
 [nuget-badge]: https://img.shields.io/nuget/v/LettuceEncrypt.svg?style=flat-square
 [nuget-download-badge]: https://img.shields.io/nuget/dt/LettuceEncrypt?style=flat-square
@@ -32,7 +32,7 @@ This project is 100% organic and best served cold with ranch and carrots. 🥬
 
 ### Project status
 
-This project is in maintenance mode. I lost interest in developing features. I will make a patch if there is a security issue. I'll also consider an update if a new .NET major version breaks and the patch fix required is small. Please see https://github.com/Dolphinsimon/LettuceEncrypt/security/policy if you wish to report a security concern.
+This project is in maintenance mode. I lost interest in developing features. I will make a patch if there is a security issue. I'll also consider an update if a new .NET major version breaks and the patch fix required is small. Please see <https://github.com/Dolphinsimon/LettuceEncrypt/security/policy> if you wish to report a security concern.
 
 ## Will this work for me?
 
@@ -107,6 +107,7 @@ webBuilder.UseKestrel(k =>
 ```
 
 #### Example: Listen + UseHttps
+
 If using `Listen` + `UseHttps` to manually configure Kestrel's address binding, use `UseLettuceEncrypt` like this:
 
 ```c#
@@ -251,7 +252,6 @@ class MyAccountStore: IAccountStore
 }
 ```
 
-
 ### Changing which challenge types are used
 
 The ACME protocol supports multiple methods for proving you own a DNS name called "challenge types".
@@ -260,13 +260,13 @@ The default value is "Any", which means this library will exhaust all supported 
 giving up.
 
 Current supported values:
+
 * `Http01` - The HTTP-01 challenge, which uses a well-known URL on the server and a HTTP request/response.
 * `TlsAlpn01` - The TLS-ALPN-01 challenge, which uses an auto-generated, ephemeral certificate in the TLS handshake.
 * `Dns01` - The DNS-01 challenge, which uses TXT record under that domain name.
 * `Any` - _(default)_ - use HTTP-01 and/or TLS-ALPN-01 DNS-01
 
 Tip: if you wish to set multiple method types and are use the "appsettings.json" approach, provide a comma-seperated list.
-
 
 ```json
 {
@@ -275,7 +275,6 @@ Tip: if you wish to set multiple method types and are use the "appsettings.json"
     }
 }
 ```
-
 
 ### When using DNS-01
 
@@ -325,7 +324,6 @@ In this scenario, ASP.NET Core is hosted by the Kestrel server (the default, in-
 In this scenario, ASP.NET Core is hosted by IIS and that web server exposes its ports directly to the internet. IIS does not support dynamically configuring HTTPS certificates, so this library cannot support this scenario, but you can still configure cert automation using a different tool. See ["Using Let's Encrypt with IIS On Windows"](https://weblog.west-wind.com/posts/2016/feb/22/using-lets-encrypt-with-iis-on-windows) for details.
 
 Azure App Service uses this for ASP.NET Core 2.2 and newer, which is why this library cannot support that scenario.. Older versions of ASP.NET Core on Azure App Service run with IIS as the reverse proxy (see below), which is also an unsupported scenario.
-
 
 ### ASP.NET Core with Kestrel Behind a TCP Load Balancer (aka SSL pass-thru)
 
