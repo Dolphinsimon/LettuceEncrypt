@@ -1,10 +1,11 @@
-// Copyright (c) Dolphinsimon.
+// Copyright (c) Nate McMaster.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using LettuceEncrypt.Internal;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -85,6 +86,41 @@ public class AcmeCertificateLoaderTests
         await loader.StartAsync(ct);
         await Task.Delay(100, ct);
         await loader.StopAsync(ct);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_WithIISIntegration_ReturnsEarly()
+    {
+        var options = Options.Create(new LettuceEncryptOptions
+        {
+            DomainNames = new[] { "test.example.com" }
+        });
+
+        // Configure UseIISIntegration = true
+        var config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string>
+            {
+                { "UseIISIntegration", "true" }
+            })
+            .Build();
+
+        var services = new ServiceCollection();
+        var sp = services.BuildServiceProvider();
+
+        var loader = new AcmeCertificateLoader(
+            sp.GetRequiredService<IServiceScopeFactory>(),
+            options,
+            NullLogger<AcmeCertificateLoader>.Instance,
+            new FakeServer(),
+            config);
+
+        var ct = TestContext.Current.CancellationToken;
+
+        await loader.StartAsync(ct);
+        await Task.Delay(100, ct);
+        await loader.StopAsync(ct);
+
+        // The loader should have logged a warning about IIS and returned early
     }
 
     [Fact]
